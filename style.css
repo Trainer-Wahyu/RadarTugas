@@ -1,0 +1,418 @@
+/* =========================================
+   1. VARIABEL WARNA (TEMA TERANG & GELAP)
+   ========================================= */
+:root {
+  --bg-body: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-input: #f8fafc;
+  --bg-notes: #f1f5f9;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-color: #cbd5e1;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+
+  /* Warna Indikator Kedaruratan Tenggat Waktu */
+  --urgent-safe: #16a34a;     /* Hijau: Masih lama (> 3 hari) */
+  --urgent-warn: #d97706;     /* Kuning/Oranye: Mendekati (< 3 hari) */
+  --urgent-danger: #dc2626;   /* Merah: Mendesak (< 24 jam / lewat) */
+}
+
+/* Variabel otomatis berubah saat Mode Gelap aktif */
+body.dark-mode {
+  --bg-body: #0f172a;
+  --bg-card: #1e293b;
+  --bg-input: #0f172a;
+  --bg-notes: #334155;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-color: #334155;
+  --primary: #3b82f6;
+  --primary-hover: #60a5fa;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* =========================================
+   2. RESET & PENGATURAN DASAR
+   ========================================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-body);
+  color: var(--text-main);
+  line-height: 1.5;
+  transition: background-color 0.25s ease, color 0.25s ease;
+  padding-bottom: 2.5rem;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* =========================================
+   3. BAGIAN ATAS (HEADER)
+   ========================================= */
+.app-header {
+  background-color: var(--primary);
+  color: #ffffff;
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.header-container {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.brand h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.badge {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.icon-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #ffffff;
+  font-size: 1.2rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.icon-btn:active {
+  transform: scale(0.95);
+}
+
+/* =========================================
+   4. KARTU & FORMULIR INPUT
+   ========================================= */
+.card {
+  background-color: var(--bg-card);
+  border-radius: 12px;
+  padding: 1.15rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+}
+
+.form-section h2 {
+  font-size: 1.05rem;
+  margin-bottom: 0.9rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.85rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+/* Pada layar HP yang sangat kecil, susun ke bawah agar tidak sempit */
+@media (max-width: 420px) {
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.optional {
+  font-weight: 400;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--bg-input);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+textarea {
+  resize: vertical;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.25rem;
+  transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+/* =========================================
+   5. PENYARING MATA PELAJARAN
+   ========================================= */
+.filter-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background-color: var(--bg-card);
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.filter-section label {
+  white-space: nowrap;
+}
+
+.filter-section select {
+  max-width: 220px;
+  padding: 0.45rem 0.6rem;
+  font-size: 0.88rem;
+}
+
+/* =========================================
+   6. DAFTAR & KARTU TUGAS
+   ========================================= */
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.task-card {
+  background-color: var(--bg-card);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+  border-left: 6px solid var(--urgent-safe); /* Garis indikator warna di kiri */
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: transform 0.15s ease, opacity 0.2s ease;
+}
+
+/* Kelas Indikator Warna Kedaruratan (Diatur oleh app.js) */
+.task-card.urgent-safe {
+  border-left-color: var(--urgent-safe);
+}
+
+.task-card.urgent-warn {
+  border-left-color: var(--urgent-warn);
+}
+
+.task-card.urgent-danger {
+  border-left-color: var(--urgent-danger);
+}
+
+/* Tampilan saat tugas ditandai selesai */
+.task-card.completed {
+  opacity: 0.6;
+  border-left-color: var(--text-muted);
+}
+
+.task-card.completed .task-title {
+  text-decoration: line-through;
+}
+
+/* Baris Atas Kartu: Mata Pelajaran • Guru */
+.task-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* Judul Tugas */
+.task-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+  word-break: break-word;
+}
+
+/* Informasi Tenggat & Hitung Mundur */
+.task-deadline-info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.countdown-pill {
+  padding: 0.15rem 0.55rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.78rem;
+  background-color: var(--bg-notes);
+  color: var(--text-main);
+}
+
+.urgent-danger .countdown-pill {
+  background-color: rgba(220, 38, 38, 0.15);
+  color: var(--urgent-danger);
+}
+
+.urgent-warn .countdown-pill {
+  background-color: rgba(217, 119, 6, 0.15);
+  color: var(--urgent-warn);
+}
+
+/* Kotak Catatan Tambahan Khusus */
+.task-notes {
+  background-color: var(--bg-notes);
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--text-main);
+  white-space: pre-line; /* Menjaga baris baru jika catatan panjang */
+}
+
+/* Tombol Aksi di Bawah Kartu */
+.task-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.btn-action {
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-input);
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+.btn-done {
+  border-color: var(--urgent-safe);
+  color: var(--urgent-safe);
+}
+
+.btn-delete {
+  border-color: var(--urgent-danger);
+  color: var(--urgent-danger);
+}
+
+/* Tampilan Kosong */
+.empty-state {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  background-color: var(--bg-card);
+  border-radius: 12px;
+  border: 1px dashed var(--border-color);
+}
+
+/* =========================================
+   7. CADANGKAN & PULIHKAN DATA
+   ========================================= */
+.backup-section h3 {
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.backup-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 0.85rem;
+}
+
+.backup-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+
+.btn-secondary {
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-input);
+  color: var(--text-main);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-secondary:hover {
+  border-color: var(--primary);
+}
