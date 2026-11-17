@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="Aplikasi pengingat tugas sekolah offline berdasarkan tenggat waktu terdekat.">
+  
+  <title>TugasRadar - Pengingat Tugas Sekolah</title>
+  
+  <!-- Menghubungkan konfigurasi PWA agar bisa diinstal di HP -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  
+  <!-- Menghubungkan file tampilan CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- BAGIAN ATAS: Judul, Penghitung Tugas, dan Tombol Mode Gelap -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <h1>TugasRadar</h1>
+        <span id="active-counter" class="badge">0 Tugas Aktif</span>
+      </div>
+      <button type="button" id="theme-toggle" class="icon-btn" aria-label="Ubah tema gelap atau terang" title="Ubah Tema">
+        🌙
+      </button>
+    </div>
+  </header>
+
+  <!-- KONTEN UTAMA -->
+  <main class="container">
+
+    <!-- 1. FORMULIR TAMBAH TUGAS -->
+    <section class="card form-section" aria-labelledby="form-heading">
+      <h2 id="form-heading">Tambah Tugas Baru</h2>
+      
+      <form id="task-form">
+        <!-- Judul Tugas -->
+        <div class="form-group">
+          <label for="task-title">Judul Tugas *</label>
+          <input 
+            type="text" 
+            id="task-title" 
+            placeholder="Contoh: Latihan Soal Trigonometri Hal. 45" 
+            required
+          >
+        </div>
+
+        <!-- Baris Mata Pelajaran & Nama Guru -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="task-subject">Mata Pelajaran *</label>
+            <select id="task-subject" required>
+              <option value="" disabled selected>Pilih Mapel...</option>
+              <option value="Matematika">Matematika</option>
+              <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+              <option value="Bahasa Inggris">Bahasa Inggris</option>
+              <option value="Fisika">Fisika</option>
+              <option value="Kimia">Kimia</option>
+              <option value="Biologi">Biologi</option>
+              <option value="Sejarah">Sejarah</option>
+              <option value="Geografi">Geografi</option>
+              <option value="Ekonomi">Ekonomi</option>
+              <option value="Sosiologi">Sosiologi</option>
+              <option value="Informatika">Informatika</option>
+              <option value="PPKn">PPKn</option>
+              <option value="PAI / Agama">PAI / Agama</option>
+              <option value="Seni & Prakarya">Seni & Prakarya</option>
+              <option value="PJOK">PJOK</option>
+              <option value="Lainnya">Lainnya</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="task-teacher">Guru Pemberi Tugas *</label>
+            <input 
+              type="text" 
+              id="task-teacher" 
+              placeholder="Contoh: Pak Budi" 
+              required
+            >
+          </div>
+        </div>
+
+        <!-- Tanggal & Jam Tenggat Waktu -->
+        <div class="form-group">
+          <label for="task-deadline">Tenggat Waktu Pengumpulan *</label>
+          <input 
+            type="datetime-local" 
+            id="task-deadline" 
+            required
+          >
+        </div>
+
+        <!-- Catatan Tambahan Khusus (Opsional) -->
+        <div class="form-group">
+          <label for="task-notes">Catatan Tambahan Khusus <span class="optional">(Opsional)</span></label>
+          <textarea 
+            id="task-notes" 
+            rows="2" 
+            placeholder="Contoh: Kumpulkan format PDF di Google Classroom, wajib tulis tangan..."
+          ></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary">
+          + Simpan Tugas
+        </button>
+      </form>
+    </section>
+
+    <!-- 2. PENYARING MATA PELAJARAN -->
+    <section class="filter-section" aria-label="Filter Tugas">
+      <label for="filter-subject">Tampilkan Mapel:</label>
+      <select id="filter-subject">
+        <option value="ALL">Semua Mata Pelajaran</option>
+        <!-- Opsi mata pelajaran lainnya akan diisi otomatis oleh JavaScript -->
+      </select>
+    </section>
+
+    <!-- 3. DAFTAR KARTU TUGAS (Diurutkan otomatis oleh JavaScript) -->
+    <section class="task-list-section" aria-label="Daftar Tugas">
+      <div id="task-list" class="task-list">
+        <!-- Kartu tugas akan muncul secara otomatis di dalam wadah ini -->
+      </div>
+
+      <!-- Tampilan saat belum ada tugas -->
+      <div id="empty-state" class="empty-state">
+        <p>Belum ada tugas tercatat. Yuk, tambahkan tugas pertamamu di atas!</p>
+      </div>
+    </section>
+
+    <!-- 4. CADANGKAN & PULIHKAN DATA -->
+    <section class="card backup-section" aria-labelledby="backup-heading">
+      <h3 id="backup-heading">Kelola Data Lokal</h3>
+      <p class="backup-desc">Simpan cadangan data tugas ke memori HP agar aman jika berganti perangkat.</p>
+      
+      <div class="backup-actions">
+        <button type="button" id="export-btn" class="btn-secondary">
+          ⬇️ Cadangkan Data
+        </button>
+        <button type="button" id="import-btn" class="btn-secondary">
+          ⬆️ Pulihkan Data
+        </button>
+        <!-- Input file tersembunyi untuk memilih file cadangan -->
+        <input type="file" id="import-file" accept=".json" hidden>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Menghubungkan file logika JavaScript -->
+  <script src="app.js"></script>
+</body>
+</html>
